@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manvi's Productivity Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Indie+Flower&family=Orbitron:wght@700&family=VT323&family=Fredoka+One&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Comic Neue', cursive;
+    }
+    body {
+      margin: 0;
+      color: #4c4c4c;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      background-size: cover;
+      background-attachment: fixed;
+      background-image: url('https://i.pinimg.com/originals/ba/50/e5/ba50e5385e7b680f8f02888d49f3b607.gif');
+      background-color: #f6e4ea;
+    }
+    h1 {
+      text-align: center;
+      font-size: 4rem;
+      color: #f7f5f6;
+      margin-top: 2rem;
+      font-family: 'Indie Flower', cursive;
+      text-shadow: 2px 2px #f05485;
+    }
+    h2 {
+      text-align: center;
+      
+      color: #f7f5f6;
+      
+      font-family: 'Indie Flower', cursive;
+      text-shadow: 2px 2px #fd9999;
+    }
+     h3 {
+      text-align: center;
+      
+      color: #fd9999;
+      
+      font-family: 'Indie Flower', cursive;
+      text-shadow: 2px 2px #ffe5e5;
+    }
+    h1::after {
+      content: " ✨🌸🧁";
+    }
+    .big-timer {
+      font-size: 11rem;
+      margin: 2rem 0;
+      color: #ffffff;
+      text-align: center;
+      font-weight: bold;
+      font-family: 'Fredoka One', cursive;
+      text-shadow: 2px 2px #fd9999;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .controls button {
+      background: #ffe0f0;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    .controls button:hover {
+      background: #ffc0cb;
+    }
+    .theme-switcher {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+    .music-switcher {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.music-switcher select,
+.music-switcher button,
+.music-switcher input[type="range"] {
+  padding: 0.4rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+}
+
+    .apps-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      width: 95%;
+      max-width: 1300px;
+      padding: 2rem;
+    }
+    .widget {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
+      transition: transform 0.3s ease;
+    }
+    .widget:hover {
+      transform: translateY(-5px);
+    }
+    .widget h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: #ff69b4;
+      font-family: 'Comic Neue', cursive;
+    }
+    .calendar iframe {
+      width: 100%;
+      border: none;
+      height: 300px;
+      border-radius: 10px;
+    }
+    .todo input[type="text"] {
+      width: 75%;
+      padding: 0.7rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .todo button {
+      padding: 0.6rem;
+      background: #ffb6c1;
+      border: none;
+      border-radius: 8px;
+      margin-left: 0.5rem;
+      cursor: pointer;
+    }
+    .todo-list {
+      margin-top: 1rem;
+    }
+    .todo-list div {
+      margin: 5px 0;
+      font-size: 1.1rem;
+    }
+    
+
+    .widget textarea {
+      width: 100%;
+      height: 200px;
+      padding: 1rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
+    .mood-tracker button {
+      font-size: 1.5rem;
+      margin: 0.3rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: transform 0.2s;
+    }
+    .mood-tracker button:hover {
+      transform: scale(1.2);
+    }
+   
+
+    #selected-mood {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      font-style: italic;
+    }
+    #study-buddy {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 230px;
+  background: rgba(255, 240, 250, 0.95);
+  border-radius: 15px;
+  box-shadow: 2px 2px 12px rgba(255, 105, 180, 0.3);
+  padding: 1rem;
+  text-align: center;
+  font-family: 'Comic Neue', cursive;
+  z-index: 999;
+  transition: all 0.4s ease;
+  animation: floatBuddy 3s ease-in-out infinite;
+}
+
+@keyframes floatBuddy {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+#study-buddy img {
+  width: 80px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+.buddy-message {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #ff69b4;
+}
+
+.buddy-controls button {
+  margin: 0 0.3rem;
+  padding: 0.3rem 0.6rem;
+  border: none;
+  background: #ffe0f0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.buddy-controls button:hover {
+  background: #ffc0cb;
+}
+
+    .focus-mode .apps-container > *:not(.todo):not(.big-timer),
+.focus-mode h1,
+.focus-mode .theme-switcher,
+.focus-mode .music-switcher {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+  </style>
+</head>
+<button onclick="toggleFocusMode()">🎯 Focus Mode</button>
+
+<body>
+  <video id="bgVideo" autoplay muted loop playsinline
+  style="position: fixed; top: 0; left: 0; min-width: 100vw; min-height: 100vh; object-fit: cover; z-index: -1;">
+  <source id="videoSource" src="" type="video/mp4">
+</video>
+
+  <h1>Manvi's Productivity Hub</h1>
+  <h2>Let's study. You are the best and you can do it!</h2>
+  <div class="big-timer" id="timer">00:00</div>
+  <div class="controls">
+    <button onclick="playSound(); startTimer()">Start</button>
+    <button onclick="playSound(); pauseTimer()">Pause</button>
+    <button onclick="playSound(); resetTimer()">Reset</button>
+  </div>
+  <div class="theme-switcher">
+    
+    <select onchange="changeTheme(this.value)">
+      <option value="default">🌸 Default</option>
+      <option value="rainy">🌧️ Rainy</option>
+      <option value="cafe">☕ Cafe</option>
+      <option value="snowysetup">❄️Snowy</option>
+      <option value="girlstudying">📚StudyGirl</option>
+      <option value="window">🌞 Window</option>
+      <option value="train"> 🚆 Moving Train</option>
+    </select>
+  </div>
+  <div class="music-switcher">
+  <select id="musicSelect" onchange="handleMusicChange()">
+    <option value="">🎵 Select Music</option>
+    <option value="hbirds.mp3">Birds Chirping</option>
+    <option value="cafe.mp3">Cafe</option>
+    <option value="snow.mp3">Snowy</option> 
+    <option value="sound-of-falling-rain-145473.mp3">Soft rain</option>
+    <option value="thunderrain.mp3">ThunderRain</option>
+    <option value="train.mp3">Moving train</option>
+    <option value="ocean.mp3">Peaceful Ocean</option>
+    <option value="wind.mp3">Wind</option>
+  </select>
+  <button id="playPauseBtn" onclick="toggleMusic()" style="display:none;">⏯️</button>
+  <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)" style="display:none; width: 100px;">
+</div>
+
+  <div class="apps-container">
+    <div class="widget calendar">
+  <h2>📅 Calendar</h2>
+  <div class="calendar-header">
+    <button onclick="changeMonth(-1)">⬅️</button>
+    <span id="calendar-title"></span>
+    <button onclick="changeMonth(1)">➡️</button>
+  </div>
+  <div id="calendar"></div>
+</div>
+
+<div id="study-buddy">
+ 
+ <h3>🐻Bear Buddy🐻</h3>
+  <div class="buddy-message" id="buddy-message">🌸 I'm here to cheer you on!</div>
+  <div class="buddy-controls">
+    <button onclick="nextBuddyTip()">⏩</button>
+    <button onclick="toggleBuddy()">🙈</button>
+  </div>
+</div>
+
+
+<script>
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
+  const today = new Date();
+
+ const events = {};
+
+  function createCalendar(elem, year, month) {
+    let mon = month - 1;
+    let d = new Date(year, mon);
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"];
+    document.getElementById('calendar-title').textContent = `${monthNames[mon]} ${year}`;
+
+    let table = '<table><thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead><tbody><tr>';
+    for (let i = 0; i < getDay(d); i++) {
+      table += '<td></td>';
+    }
+    while (d.getMonth() === mon) {
+      const day = d.getDate();
+      const fullDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const isToday = d.toDateString() === today.toDateString();
+      const isEvent = events[fullDate];
+      table += `<td class="${isToday ? 'today' : ''} ${isEvent ? 'event' : ''}" title="${isEvent ? events[fullDate] : ''}">` + day + (isEvent ? ' ⭐' : '') + '</td>';
+      if (getDay(d) % 7 === 6) {
+        table += '</tr><tr>';
+      }
+      d.setDate(d.getDate() + 1);
+    }
+    if (getDay(d) !== 0) {
+      for (let i = getDay(d); i < 7; i++) {
+        table += '<td></td>';
+      }
+    }
+    table += '</tr></tbody></table>';
+    elem.innerHTML = table;
+  }
+
+  function getDay(date) {
+    let day = date.getDay();
+    return day;
+  }
+
+  function changeMonth(delta) {
+    currentMonth += delta;
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
+    } else if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    }
+    createCalendar(document.getElementById('calendar'), currentYear, currentMonth + 1);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    createCalendar(document.getElementById('calendar'), currentYear, currentMonth + 1);
+  });
+</script>
+
+<style>
+  .calendar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .calendar-header button {
+    background-color: #ffc0cb;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  .calendar-header span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff69b4;
+    font-family: 'Comic Neue', cursive;
+  }
+  #calendar table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+    text-align: center;
+    background: #fff0f5;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  #calendar th, #calendar td {
+    border: 1px solid #eee;
+    padding: 0.6rem;
+    background: #fffafc;
+    color: #4c4c4c;
+    transition: background 0.3s ease;
+  }
+  #calendar th {
+    background: #ffccdf;
+    font-weight: bold;
+    color: #444;
+  }
+  #calendar td:hover {
+    background: #ffe6f0;
+    cursor: pointer;
+  }
+  #calendar td.today {
+    background: #ff69b4;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+  }
+  #calendar td.event {
+    background: #ffd9ec;
+    font-weight: bold;
+    color: #ff4da6;
+    position: relative;
+  }
+</style>
+
+    <div class="widget todo">
+      <h2>✅ To-Do List</h2>
+      <input type="text" id="todoInput" placeholder="New task...">
+      <button onclick="playSound(); addTodo()">➕</button>
+      <div class="todo-list" id="todoList"></div>
+    </div>
+    
+    <div class="widget journal">
+      <h2>📔 Journal</h2>
+      <textarea id="journalInput" placeholder="Write your thoughts..."></textarea>
+      <button onclick="saveJournal()">💾 Save</button>
+      <div id="journalHistory"></div>
+    </div>
+
+    <div class="widget mood-tracker">
+      <h2>🎭 Mood Tracker</h2>
+      <div>
+        <button onclick="playSound(); setMood('😊')">😊</button>
+        <button onclick="playSound(); setMood('😞')">😞</button>
+        <button onclick="playSound(); setMood('😡')">😡</button>
+        <button onclick="playSound(); setMood('😴')">😴</button>
+        <button onclick="playSound(); setMood('😇')">😇</button>
+      </div>
+      <div id="selected-mood">No mood selected today.</div>
+    </div>
+  </div>
+  <audio id="clickSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_42b1e1c4f7.mp3"></audio>
+  <script>
+    const clickSound = document.getElementById('clickSound');
+    function playSound() {
+      clickSound.currentTime = 0;
+      clickSound.play();
+    }
+    let timerInterval;
+    let totalSeconds = 0;
+    let lastMood = null;
+    let moodTime = null;
+    function updateDisplay() {
+      const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+      const seconds = String(totalSeconds % 60).padStart(2, '0');
+      document.getElementById("timer").textContent = `${minutes}:${seconds}`;
+    }
+    function startTimer() {
+      if (!timerInterval) {
+        timerInterval = setInterval(() => {
+          totalSeconds++;
+          updateDisplay();
+        }, 1000);
+      }
+    }
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+    function resetTimer() {
+      pauseTimer();
+      totalSeconds = 0;
+      updateDisplay();
+    }
+   function changeTheme(theme) {
+  const themes = {
+    default: '', // no video
+    rainy: 'thundr study.mp4',
+    cafe: 'cozycafe.mp4',
+    snowysetup: 'snowysetup.mp4',
+    window: 'window.mp4',
+    train: 'moving train.mp4',
+    girlstudying: 'girlstudy.mp4'
+  };
+
+  const video = document.getElementById("bgVideo");
+  const source = document.getElementById("videoSource");
+
+  if (themes[theme]) {
+    source.src = themes[theme];
+    video.load(); // reload the video
+    video.style.display = 'block';
+  } else {
+    video.style.display = 'none'; // hide if 'default' theme
+  }
+}
+
+    function setMood(emoji) {
+      const now = new Date();
+      lastMood = emoji;
+      moodTime = now.toLocaleTimeString();
+      document.getElementById("selected-mood").textContent = `You felt ${lastMood} at ${moodTime}`;
+    }
+  const motivationalQuotes = [
+  "🌟 You're doing amazing, sweetie!",
+  "📚 One page at a time, you got this!",
+  "💖 Rest, but never quit.",
+  "🧸 Small steps every day = big wins later.",
+  "☕ Deep breath. You’re in control.",
+  "🔥 Show up even if it’s hard today.",
+  "✨ Focus for just 5 more minutes!",
+  "🌈 Your dreams are valid and possible.",
+  "💪 Hustle quietly, let success be loud.",
+  "🍓 Progress, not perfection.",
+  "🌻 You are smart, capable, and strong.",
+  "🎯 Stop doubting, start doing!",
+  "📆 Stay consistent, not perfect.",
+  "🧠 Train your brain to win.",
+  "🎵 Play your lofi & keep going!",
+  "🧃 You’re growing even on slow days.",
+  "🍀 Believe in your magic.",
+  "🌸 Stay soft, stay strong.",
+  "🎈 Today is another chance to improve.",
+  "📖 Every effort counts.",
+  "🎨 Make today a masterpiece.",
+  "🎉 Celebrate tiny victories.",
+  "🧚‍♀️ Create your own fairy tale.",
+  "🌙 Dream, then do.",
+  "🧩 Piece by piece, it comes together.",
+  "🦄 Believe you can, and you're halfway there.",
+  "🌼 Keep blooming.",
+  "🍰 Treat yourself after hard work.",
+  "🕯️ Light your own path.",
+  "🍎 Learn something new today.",
+  "💫 Progress is better than perfection.",
+  "🍁 Change is beautiful.",
+  "🪐 Keep your goals in orbit.",
+  "🌊 Go with the productive flow.",
+  "🍇 Be gentle, but keep going.",
+  "🛼 Keep rolling forward.",
+  "📚 You’re building your future one page at a time.",
+  "📎 Hold on. You’re almost there.",
+  "🦋 Growth takes time. Be patient.",
+  "🕊️ Let go of pressure, keep the purpose.",
+  "🔮 Visualize success. Then chase it.",
+  "🍓 Don’t stop until you’re proud.",
+  "🎀 Do it for the version of you who dreamed big.",
+  "🍄 Stay grounded and keep working.",
+  "🍒 Motivation is fleeting; discipline stays.",
+  "🍉 Hydrate, study, rest, repeat.",
+  "🧸 Keep going, future you will thank you.",
+  "🌤️ Start now. It doesn’t have to be perfect.",
+  "🎒 Pack your ambition with your books.",
+  "🔖 Bookmark your goals, come back daily.",
+  "📌 Stay pinned to your purpose.",
+  "🍬 Sugar and grind makes the dream right.",
+  "🍪 Reward yourself, but earn it first.",
+  "🥛 Don’t forget to breathe.",
+  "📍 You are here → Keep moving forward.",
+  "🎥 Make your life a motivational movie.",
+  "🖊️ Write your own success story.",
+  "📦 Pack doubts away and start.",
+  "🚪 Opportunity knocks after consistency.",
+  "🗂️ Organize your thoughts, then execute.",
+  "🧼 Clean space, clear mind, sharp focus.",
+  "🚿 Wash away distractions.",
+  "🌧️ Even rainy days grow flowers.",
+  "🍦 Add a little sweetness to your routine.",
+  "🧃 Don’t sip self-doubt.",
+  "📻 Let the grind be your rhythm.",
+  "🔋 Recharge, then conquer.",
+  "💾 Save your progress, not just your files.",
+  "🌟 You’re the star of your study saga.",
+  "🌠 Make your wishes work for you.",
+  "🌔 Even moons wax and wane, so can you.",
+  "📱 Don't scroll—go achieve a goal.",
+  "🧃 Progress isn't always visible, but it's real.",
+  "🎲 Take a chance on discipline.",
+  "🍩 Don’t let distractions eat your time.",
+  "🐻 You’ve beary much got this!",
+  "🐣 Start small, dream big.",
+  "🌟 Focus creates miracles.",
+  "🧠 Learning rewires your brain beautifully.",
+  "🧸 Be kind to your mind.",
+  "🍔 Feed your focus, starve the doubt.",
+  "🚲 One pedal at a time, you move forward.",
+  "🎈 Your time is now.",
+  "🕘 Use time like treasure.",
+  "🐇 Hop into your best pace.",
+  "🦊 Outsmart your distractions.",
+  "🎧 Tune out the noise, turn up the productivity.",
+  "🧶 Thread focus through your day.",
+  "🧊 Stay cool and carry on.",
+  "🍿 Pop into action mode.",
+  "📸 Capture today’s productivity.",
+  "🚀 Let your success lift off.",
+  "🧲 Attract greatness through discipline.",
+  "🪁 Let go of resistance, fly high.",
+  "🌞 Rise and grind.",
+  "🌜 Study while others sleep.",
+  "🧁 You’re sweetly capable.",
+  "🍓 Sow effort, reap reward.",
+  "🧠 Sharpen your sword of knowledge.",
+  "🎵 Your future is your favorite playlist.",
+  "🎯 Hit small targets daily.",
+  "📋 Check off your greatness.",
+  "🖍️ Color your day productive.",
+  "🛏️ Rest with pride in your effort.",
+  "🧸 Productivity feels like peace.",
+  "🥂 Toast to showing up.",
+  "📅 Set your intention each day.",
+  "📮 Deliver your best effort today.",
+  "📡 Broadcast belief in yourself.",
+  "💌 Send yourself motivation.",
+  "🧳 Pack determination everywhere.",
+  "🎢 Ups and downs, but stay on track.",
+  "🏹 Aim high, stay grounded.",
+  "🎤 Your hustle will speak for you.",
+  "🎟️ Admit yourself to success.",
+  "🪞 Reflect on how far you’ve come.",
+  "📬 Mail good thoughts to your brain.",
+  "🧵 Stitch progress into your habits.",
+  "📌 Pin hope on today’s efforts.",
+  "🪅 Celebrate every small win.",
+  "🥗 Feed your potential.",
+  "🧄 Chop the tasks, stir the success.",
+  "📂 File away self-doubt.",
+  "🧇 Stack your study hours.",
+  "🪗 Play your way to success.",
+  "🪞 Mirror your efforts daily.",
+  "📕 Highlight your strengths.",
+  "📠 Send motivation to your future self.",
+  "🧃 Sip some focus and carry on.",
+  "📈 Track the rise of your efforts.",
+  "🎨 Paint your day productive.",
+  "🧸 You’ve got cozy courage.",
+  "🌺 You bloom by showing up.",
+  "🍪 Make progress your snack.",
+  "🛍️ Bag your goals one by one.",
+  "📚 The grind is part of the glory.",
+  "🧃 Add sweetness to your study sesh.",
+  "📡 You’re sending out high-vibe efforts.",
+  "🔓 Unlock your day with action.",
+  "🧼 Clear space, clear goals.",
+  "📎 Clip goals to habits.",
+  "🎐 Let effort breeze through your day.",
+  "🧊 Freeze procrastination, act now.",
+  "🧁 Be soft, be strong, keep working.",
+  "📫 Deliver your best self.",
+  "🪶 Light effort daily beats heavy regrets.",
+  "🐚 Listen to your goals whisper.",
+  "🍉 Slice your goals into pieces.",
+  "🐾 Step gently but steadily.",
+  "🥄 Spoon-feed focus to your mind.",
+  "🍯 Sweet rewards await hustle.",
+  "🌄 Today is a sunrise of effort.",
+  "🍂 Even autumn leaves fall with grace.",
+  "🧁 Sprinkle effort on everything you do.",
+  "🧤 Hold tight to your mission.",
+  "📻 Let your actions play loud.",
+  "🎐 Study breeze mode: ON.",
+  "🧃 Drink deep from the focus fountain.",
+  "🧼 Wipe away doubt.",
+  "🧸 Be soft with yourself, but keep going.",
+  "🌷 Petals grow, so do you.",
+  "🍰 A slice of progress daily.",
+  "📆 Your routine is your power.",
+  "🧃 Gulp down inspiration.",
+  "💌 You owe effort to your dreams.",
+  "🎲 Take your shot at success.",
+  "🧃 Stir your soul, sip success.",
+  "🧢 Wear your purpose with pride.",
+  "🧺 Carry your goals gently.",
+  "🧃 Stay hydrated and hustle!",
+  "🧁 Work, breathe, smile, repeat."
+];
+
+let buddyIndex = 0;
+let buddyVisible = true;
+
+// Show new quote
+function nextBuddyTip() {
+  const randomIndex = Math.floor(Math.random() * motivationalQuotes.length);
+  document.getElementById("buddy-message").textContent = motivationalQuotes[randomIndex];
+}
+
+// Toggle visibility
+function toggleBuddy() {
+  const buddy = document.getElementById("study-buddy");
+  buddyVisible = !buddyVisible;
+  buddy.style.display = buddyVisible ? "block" : "none";
+}
+
+// Auto-pop messages every 15 mins (900,000 ms)
+setInterval(() => {
+  if (buddyVisible) nextBuddyTip();
+}, 900000); // change to 300000 for 5 mins or lower
+
+// First motivational tip
+document.addEventListener('DOMContentLoaded', () => {
+  nextBuddyTip();
+});
+
+
+    function saveJournal() {
+      const input = document.getElementById('journalInput');
+      const entry = input.value.trim();
+      if (entry) {
+        const date = new Date().toLocaleDateString();
+        let history = JSON.parse(localStorage.getItem('journalHistory') || '[]');
+        history.unshift({ date, entry });
+        localStorage.setItem('journalHistory', JSON.stringify(history));
+        input.value = "";
+        displayJournalHistory();
+      }
+    }
+    function displayJournalHistory() {
+  const container = document.getElementById('journalHistory');
+  let history = JSON.parse(localStorage.getItem('journalHistory') || '[]');
+  container.innerHTML = '<h3>📚 Previous Entries:</h3>';
+
+  history.forEach((item, index) => {
+    const div = document.createElement('div');
+    div.innerHTML = `<strong>${item.date}</strong><br>${item.entry}`;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "🗑️";
+    deleteBtn.style.marginLeft = "10px";
+    deleteBtn.style.background = "#ffcccb";
+    deleteBtn.style.border = "none";
+    deleteBtn.style.borderRadius = "6px";
+    deleteBtn.style.cursor = "pointer";
+    deleteBtn.onclick = () => {
+      history.splice(index, 1); // Remove from array
+      localStorage.setItem('journalHistory', JSON.stringify(history)); // Update storage
+      displayJournalHistory(); // Refresh UI
+    };
+
+    div.appendChild(deleteBtn);
+    container.appendChild(div);
+    container.appendChild(document.createElement('hr'));
+  });
+}
+
+    function addTodo() {
+  const input = document.getElementById("todoInput");
+  const task = input.value.trim();
+  if (task) {
+    const list = document.getElementById("todoList");
+    const div = document.createElement("div");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    const label = document.createElement("label");
+    label.textContent = " " + task;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "🗑️";
+    deleteBtn.style.marginLeft = "10px";
+    deleteBtn.style.background = "#ffcccb";
+    deleteBtn.style.border = "none";
+    deleteBtn.style.borderRadius = "6px";
+    deleteBtn.style.cursor = "pointer";
+    deleteBtn.onclick = () => list.removeChild(div);
+
+    div.appendChild(checkbox);
+    div.appendChild(label);
+    div.appendChild(deleteBtn);
+    list.appendChild(div);
+    input.value = "";
+  }
+}
+
+let musicAudio = new Audio();
+let isPlaying = false;
+
+function handleMusicChange() {
+  const select = document.getElementById("musicSelect");
+  const playBtn = document.getElementById("playPauseBtn");
+  const volumeSlider = document.getElementById("volumeControl");
+
+  if (select.value) {
+    musicAudio.src = select.value;
+    musicAudio.loop = true;
+    musicAudio.volume = volumeSlider.value;
+    playBtn.style.display = "inline-block";
+    volumeSlider.style.display = "inline-block";
+    musicAudio.play();
+    isPlaying = true;
+    playBtn.textContent = "⏸️";
+  } else {
+    stopMusic();
+  }
+}
+
+function toggleMusic() {
+  const playBtn = document.getElementById("playPauseBtn");
+  if (isPlaying) {
+    musicAudio.pause();
+    playBtn.textContent = "▶️";
+  } else {
+    musicAudio.play();
+    playBtn.textContent = "⏸️";
+  }
+  isPlaying = !isPlaying;
+}
+
+function stopMusic() {
+  musicAudio.pause();
+  musicAudio.currentTime = 0;
+  isPlaying = false;
+  document.getElementById("playPauseBtn").style.display = "none";
+  document.getElementById("volumeControl").style.display = "none";
+}
+
+function setVolume(val) {
+  musicAudio.volume = val;
+}
+function toggleFocusMode() {
+  document.body.classList.toggle("focus-mode");
+}
+
+  </script>
+</body>
+</html>
